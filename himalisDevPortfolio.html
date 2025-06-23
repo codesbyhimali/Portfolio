@@ -1,4 +1,3 @@
-<!--480 ln no.-->
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -64,7 +63,7 @@
             width: 100%;
             background: rgba(249, 250, 251, 0.8);
             backdrop-filter: blur(10px);
-            border-bottom: 1px solid var(--border);
+            border-bottom: none;
             z-index: 1000;
             transition: all 0.3s ease;
         }
@@ -201,6 +200,17 @@
             overflow: hidden;
         }
 
+        #heroWallpaper {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 0;
+            pointer-events: none;
+            display: block;
+        }
+
         .hero::before {
             content: '';
             position: absolute;
@@ -224,6 +234,33 @@
             gap: 4rem;
             align-items: center;
             width: 100%;
+            min-height: 60vh;
+        }
+
+        @media (max-width: 900px) {
+            .hero-content {
+                grid-template-columns: 1fr;
+                gap: 2rem;
+                text-align: center;
+                justify-items: center;
+            }
+            .hero-title {
+                font-size: 2.2rem;
+            }
+        }
+        @media (max-width: 600px) {
+            .hero-content {
+                padding-top: 2rem;
+            }
+            .hero-title {
+                font-size: 1.5rem;
+            }
+            .hero-subtitle {
+                font-size: 1rem;
+            }
+            .hero-description {
+                font-size: 0.98rem;
+            }
         }
 
         .hero-text {
@@ -919,18 +956,12 @@
         .fade-in {
             opacity: 0;
             transform: translateY(30px);
-            transition: all 0.8s cubic-bezier(0.4,0,0.2,1);
+            transition: all 0.8s ease;
         }
 
         .fade-in.visible {
             opacity: 1;
             transform: translateY(0);
-        }
-
-        .fade-in.invisible {
-            opacity: 0;
-            transform: translateY(30px);
-            transition: all 0.8s cubic-bezier(0.4,0,0.2,1);
         }
 
         @media (max-width: 768px) {
@@ -1042,7 +1073,8 @@
     </header>
 
     <!-- hero sec -->
-    <section class="hero">
+    <section class="hero fade-in">
+        <canvas id="heroWallpaper"></canvas>
         <div class="container">
             <div class="hero-content">
                 <div class="hero-text">
@@ -1100,7 +1132,9 @@
                     </div>
                     <div class="skill-item">
                         <span class="tooltip">Intermediate</span>
-                        <div class="skill-icon"><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAOEAAADhCAMAAAAJbSJIAAAAgVBMVEX////r6+v29vb8/Pzs7Oz5+fny8vL39/fx8fH09PTq6ur6+vr4+Pjt7e3e3t7Z2dnj4+Pb29vR0dHPz8/Ly8vAwMC+vr6ysrKenp6pqamYmJiOjo6Dg4N6enpzc3NcXFxRUVFKSkpBQUFFRUXW1tZvb29ISEg3NzcsLCwoKCgXFxcODg4AAADGxsZVVVWTk5N5d0yvAAAIyElEQVR4nO2d63aqOhCGQRIVQJCAuCAi4uW4/f+/cgGp3p1t2k5zS2fyfM/sY3uS2Elm02yPAwAAAAAAAAAAAAAAAACwW+K/+Xn8N9mE4u7z+N9kM4r/6j3IbpKx/HvgTDaL+C3kQzaTjOWkG9lkYgmyhM0kY2kpsomNJM9Y+N/k74iYtYDNJOO4z3KzyRgLz2AziVj2y3Kz2Qxs/i+4WUyMTmJv3GgyJvV+f7qf16tDZnfy0/d7o9nsZ0L+z6+d/tqZ3Mrv+3Uv/F+aW5mY/95sPjeaG5k41J+vjz9pZjfT78//e93NbMbXlY97Tazm1+vn6+O0t5u8tP16tG3m9z++D9vN7mI3t56v3f+5s0mZ3E7f12ePs1sZvfPj1+/39vN7L6vj9d/42YzO0+8v/4s/d/bzWz+80/z08+Zzcz+9Pvz9Xq9m9lcN6e0m9nc7mX4s+Vms4vYDez2bmazO083s9mczGbm72az+b3YzCxmZzMzm5ndzGZmN7PZ3MzmZjYzm5nsZjYzmczsZjYzm81sdjObmc1sZjOz2cxmdjOzmc1sZjOzmc3sZjYzmczsZjYzm81sZlazmc1sZjOz2czmZjYzmc1sZjYzm81sZlazmc3sZhazmc3sZhazmc3sZhazmczmZjbz+/v+t5tZhM7n4bZzbTj3yOaScbyr8XNJmO4c/zNJmP5V/E3k7H8x9uQjSXLm1fD+b78K+w/t7sJza/t0/xN5OZXv8AtR/E3s5mJzP71R/E3s5nf78/4m1m+Xh3s5ndmNhNbP75a8P/AHcWk5vUj2M2sZnez2cwE5reGf6e3m4vJ72azm9n893L/u4tZnMzv9m9nN3u/+t/15vLz+1v3c9nbzc/ub3tZm7zM5vN/E95+9nM5nd7P63+nndzc/kZm92cyM5m7z+/vz/7v3ez+3/+1P3czO5md3c/f3c3s5nbv5+d3c/t/+zP5mf3+j/7czczO5/9nM5v7P7+f3e7P53f9+f/Vzs5vd/F/MbmZzP5nZ/c7M5nf7+f3ez+53/wBnc3MzO/27ufzP5+/vzO/3P/ud3c/n7+/O7nf/Z38zO/2d/M/ubmZne/O5mZzc3u5nd78zO5mZ3uzu/3c3s5mZ3tzM72c3N5vZzWxmczOb2cz+9/v7uZnczObzc3s/rf/AGczm9vL/u5mcz+73czsZve/393M7nf3ezsZjO5m97+d3szOb28zO5md/vbvL+Znczu/3d3M7vZzO73cz+5mdzN/uZnd/t3+Z38/O5nd7u7mdvL7nd3v5nczO5nd78z+Z3dzM7+Z3c39nMZnd3uzu7mc38zu5vd/O7md387uZ/c3u5nf7u7m9387uZnd3N/M5v5nczs7vcz+5v5nNzM7/Z3czs5vd/ubnd/M5mdz+Znc39nMZvd3szndvM7sZvf7uZnc3+zu7md3szv9nM7uZncz+/t3s/+5mdz+5/ub38zu53uzu539zszm/2bndzO7v9nM7uZ3ezP5n8z+7mc3+/ubmdz+5udzezP5nd3c3+7u7nd3u5md/szu7nd7uznd3u/zP5n8zu7mc3+/udne3u7nd/M7u7uZzczO/wBnN/M7u5/v7ndnN7uZ3+zu7m9/u7ubm/mczu5vcz+5ubm9nMZvezmd3M5mZzm/mczu/ndzczsZzezmdzN/M7vZ3e7uZnczsZnd3u/mdzM7mZ3e/s5vdnMZndzm93sZjO7mcz+93szv5vcz+ZmN3s/wBPczO5mczs5m93szud/M5ndnM7v9zc7mfzuzmc3szn9zc3MZmczm/v9nc3N7uZnNzOZmdze5vdzOZnszO5/u72czM7vZzm93M5v7/ZzM7mc3N/P7nZzM/vc3M5mczO7mf3tzu7m9vM7mdzM5vNzO7mc3szncz+9zczndzc3m9/O5mZjN/uZnczu7ndzczM5md3uzmd/uZnczM5mczO5md3szn9/ubuZmN/M5nMxvd3uZnN/s3u5nd/s5mdze7nf3czM5ndzM5mczs5nd1Mzm9385vYzP53c3s/wBPczMZmY3M5ndzOZ/M5mZnc3M5nczOZ/N3szmfze7ndzOZ/N7uZzP5ndzmZjN7uZnM/ubmczM5ndzOZmc3+zudze/mdzM5mc3M5mf3czuZnN/MZmYzM5ndzObm93szkY3s5vZzGY2szuZzezmZjYzm5nsZjYzm81sZlazmczmZjYzm83sZjYzmc1sZjOzmc1sZjOzmc1sZlazmczmZjYzmdnsZjYzmczsZjYzm81sZlazmczmZne7ndzMZmZzm81sZvf7uZncAAAAAAAAAAAAAAAAAAAAAALAf/wDgnZ7+b3kZjf/B3szsZvZzGY2k5jd/31ms2XyN5mNrP4X8Te7kY1k+jD8TTazhOWX4m8mk1j9b+JvNpNpLMeG2Uxidj2Wmxkkk+8rN5OJ2f2+hE2kZnd7L5lNpGL5b+JvZiN/+V8TezEbyy9uQjaTmfz71+JvZnN/s/ibycxe9/tX4u8mk3+a8DeTmV7+H8TfjUZe7/lK/E0msZgMzM5ndzGY2M5vNzGY2M5vN/ndzM5vZzGY2M5vZzGY2M5vZzGY2s5vYzGY2M5vZzGZmN7PZ38zObzYzmdnsZjYzm5ndzGY2M5vZzGY2s5vYzGY2M5vZzGZmN7OZzczmZjYzm5nsZjYzmczmZjYzmczmZjYzm5nsZjYzmc3sZjYzmc1sZjOz2cxmZjM72czmZjYzmc3sZjYzmczsZjYzm83sZjZzM5vZzGZmN7OZne7mf/9k=" alt="C++"></div>
+                        <div class="skill-icon" style="display:flex;align-items:center;justify-content:center;gap:0.25rem;">
+                          <img src="ISO_C++_Logo.png" alt="C++ Logo" style="width:28px;height:28px;object-fit:contain;">
+                        </div>
                         <h3>C++</h3>
                     </div>
                     <div class="skill-item">
@@ -1123,7 +1157,7 @@
         </div>
     </section>
         <!-- projects section -->
-    <section id="projects" class="section projects-section">
+    <section id="projects" class="section projects-section fade-in">
         <div class="container">
             <h2 class="section-title fade-in">My Projects</h2>
             
@@ -1187,10 +1221,11 @@
         <div class="backend-projects">
           <div class="backend-card cpp" onclick="openBackendModal('cpp')">
             <div class="backend-icon cpp">
-                <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAOEAAADhCAMAAAAJbSJIAAAAgVBMVEX////r6+v29vb8/Pzs7Oz5+fny8vL39/fx8fH09PTq6ur6+vr4+Pjt7e3e3t7Z2dnj4+Pb29vR0dHPz8/Ly8vAwMC+vr6ysrKenp6pqamYmJiOjo6Dg4N6enpzc3NcXFxRUVFKSkpBQUFFRUXW1tZvb29ISEg3NzcsLCwoKCgXFxcODg4AAADGxsZVVVWTk5N5d0yvAAAIyElEQVR4nO2d63aqOhCGQRIVQJCAuCAi4uW4/f+/cgGp3p1t2k5zS2fyfM/sY3uS2Elm02yPAwAAAAAAAAAAAAAAAACwW+K/+Xn8N9mE4u7z+N9kM4r/6j3IbpKx/HvgTDaL+C3kQzaTjOWkG9lkYgmyhM0kY2kpsomNJM9Y+N/k74iYtYDNJOO4z3KzyRgLz2AziVj2y3Kz2Qxs/i+4WUyMTmJv3GgyJvV+f7qf16tDZnfy0/d7o9nsZ0L+z6+d/tqZ3Mrv+3Uv/F+aW5mY/95sPjeaG5k41J+vjz9pZjfT78//e93NbMbXlY97Tazm1+vn6+O0t5u8tP16tG3m9z++D9vN7mI3t56v3f+5s0mZ3E7f12ePs1sZvfPj1+/39vN7L6vj9d/42YzO0+8v/4s/d/bzWz+80/z08+Zzcz+9Pvz9Xq9m9lcN6e0m9nc7mX4s+Vms4vYDez2bmazO083s9mczGbm72az+b3YzCxmZzMzm5ndzGZmN7PZ3MzmZjYzm5nsZjYzmczsZjYzm81sdjObmc1sZjOz2cxmdjOzmc1sZjOzmc3sZjYzmczsZjYzm81sZlazmc1sZjOz2czmZjYzmc1sZjYzm81sZlazmc3sZhazmc3sZhazmc3sZhazmczmZjbz+/v+t5tZhM7n4bZzbTj3yOaScbyr8XNJmO4c/zNJmP5V/E3k7H8x9uQjSXLm1fD+b78K+w/t7sJza/t0/xN5OZXv8AtR/E3s5mJzP71R/E3s5nf78/4m1m+Xh3s5ndmNhNbP75a8P/AHcWk5vUj2M2sZnez2cwE5reGf6e3m4vJ72azm9n893L/u4tZnMzv9m9nN3u/+t/15vLz+1v3c9nbzc/ub3tZm7zM5vN/E95+9nM5nd7P63+nndzc/kZm92cyM5m7z+/vz/7v3ez+3/+1P3czO5md3c/f3c3s5nbv5+d3c/t/+zP5mf3+j/7czczO5/9nM5v7P7+f3e7P53f9+f/Vzs5vd/F/MbmZzP5nZ/c7M5nf7+f3ez+53/wBnc3MzO/27ufzP5+/vzO/3P/ud3c/n7+/O7nf/Z38zO/2d/M/ubmZne/O5mZzc3u5nd78zO5mZ3uzu/3c3s5mZ3tzM72c3N5vZzWxmczOb2cz+9/v7uZnczObzc3s/rf/AGczm9vL/u5mcz+73czsZve/393M7nf3ezsZjO5m97+d3szOb28zO5md/vbvL+Znczu/3d3M7vZzO73cz+5mdzN/uZnd/t3+Z38/O5nd7u7mdvL7nd3v5nczO5nd78z+Z3dzM7+Z3c39nMZnd3uzu7mc38zu5vd/O7md387uZ/c3u5nf7u7m9387uZnd3N/M5v5nczs7vcz+5v5nNzM7/Z3czs5vd/ubnd/M5mdz+Znc39nMZvd3szndvM7sZvf7uZnc3+zu7md3szv9nM7uZncz+/t3s/+5mdz+5/ub38zu53uzu539zszm/2bndzO7v9nM7uZ3ezP5n8z+7mc3+/ubmdz+5udzezP5nd3c3+7u7nd3u5md/szu7nd7uznd3u/zP5n8zu7mc3+/udne3u7nd/M7u7uZzczO/wBnN/M7u5/v7ndnN7uZ3+zu7m9/u7ubm/mczu5vcz+5ubm9nMZvezmd3M5mZzm/mczu/ndzczsZzezmdzN/M7vZ3e7uZnczsZnd3u/mdzM7mZ3e/s5vdnMZndzm93sZjO7mcz+93szv5vcz+ZmN3s/wBPczO5mczs5m93szud/M5ndnM7v9zc7mfzuzmc3szn9zc3MZmczm/v9nc3N7uZnNzOZmdze5vdzOZnszO5/u72czM7vZzm93M5v7/ZzM7mc3N/P7nZzM/vc3M5mczO7mf3tzu7m9vM7mdzM5vNzO7mc3szncz+9zczndzc3m9/O5mZjN/uZnczu7ndzczM5md3uzmd/uZnczM5mczO5md3szn9/ubuZmN/M5nMxvd3uZnN/s3u5nd/s5mdze7nf3czM5ndzM5mczs5nd1Mzm9385vYzP53c3s/wBPczMZmY3M5ndzOZ/M5mZnc3M5nczOZ/N3szmfze7ndzOZ/N7uZzP5ndzmZjN7uZnM/ubmczM5ndzOZmc3+zudze/mdzM5mc3M5mf3czuZnN/MZmYzM5ndzObm93szkY3s5vZzGY2szuZzezmZjYzm5nsZjYzm81sZlazmczmZjYzm83sZjYzmc1sZjOzmc1sZjOzmc1sZlazmczmZjYzmdnsZjYzmczsZjYzm81sZlazmczmZne7ndzMZmZzm81sZvf7uZncAAAAAAAAAAAAAAAAAAAAAALAf/wDgnZ7+b3kZjf/B3szsZvZzGY2k5jd/31ms2XyN5mNrP4X8Te7kY1k+jD8TTazhOWX4m8mk1j9b+JvNpNpLMeG2Uxidj2Wmxkkk+8rN5OJ2f2+hE2kZnd7L5lNpGL5b+JvZiN/+V8TezEbyy9uQjaTmfz71+JvZnN/s/ibycxe9/tX4u8mk3+a8DeTmV7+H8TfjUZe7/lK/E0msZgMzM5ndzGY2M5vNzGY2M5vN/ndzM5vZzGY2M5vZzGY2M5vZzGY2s5vYzGY2M5vZzGZmN7PZ38zObzYzmdnsZjYzm5ndzGY2M5vZzGY2s5vYzGY2M5vZzGZmN7OZzczmZjYzm5nsZjYzmczmZjYzmczmZjYzm5nsZjYzmc3sZjYzmc1sZjOz2cxmZjM72czmZjYzmc3sZjYzmczsZjYzm83sZjZzM5vZzGZmN7OZne7mf/9k=" alt="C++ Logo">
+                <img src="ISO_C++_Logo.png" alt="C++ Logo" style="width:48px;height:48px;object-fit:contain;display:block;margin:0 auto 0.5rem;">
             </div>
             <h3 class="backend-title">Library Management System</h3>
             <p class="backend-subtitle">Advanced C++ console application with data structures and algorithms</p>
+            <a href="https://www.programiz.com/online-compiler/4XKlqN6z6Qt6v" target="_blank" class="project-link secondary" style="display:block;margin:1rem auto 0 auto;max-width:220px;text-align:center;">Run with Online Compiler</a>
           </div>
           <div class="backend-card java" onclick="openBackendModal('java')">
             <div class="backend-icon java">
@@ -1205,7 +1240,7 @@
   </section>
 
   <!-- contact section -->
-  <section id="contact" class="section contact">
+  <section id="contact" class="section contact fade-in">
     <div class="container">
       <h2 class="section-title fade-in">Get In Touch</h2>
       <div class="contact-content">
@@ -1214,7 +1249,7 @@
         </p>
         <div class="contact-links fade-in">
           <a href="mailto:himalis106@gmail.com" class="contact-link" target="_blank"> 
-            <img class="contact-link-icon gmail" src="https://www.svgrepo.com/show/473741/gmail.svg" alt="Gmail">
+            <img class="contact-link-icon gmail" src="logoOfgmail.jpg" alt="Gmail">
             <span>Gmail</span>
           </a>
           <a href="https://linkedin.com/in/himalims" target="_blank" class="contact-link">
@@ -1226,11 +1261,11 @@
             <span>GitHub</span>
             </a>
           <a href="https://leetcode.com/u/codesbyhimali/" target="_blank" class="contact-link">
-            <img class="contact-link-icon leetcode" src="https://www.svgrepo.com/show/373738/leetcode.svg" alt="LeetCode">
+            <img class="contact-link-icon leetcode" src="leetcodeLogo.png" alt="LeetCode">
             <span>LeetCode</span>
           </a>
           <a href="https://medium.com/@himali_" target="_blank" class="contact-link">
-            <img class="contact-link-icon" src="https://www.svgrepo.com/show/475659/medium-color.svg" alt="Medium">
+            <img class="contact-link-icon" src="mediumLogo.png" alt="Medium">
             <span>Medium</span>
           </a>
         </div>
@@ -1239,7 +1274,7 @@
   </section>
 
   <!-- footer -->
-  <footer class="footer">
+  <footer class="footer fade-in">
     <div class="container">
       <p>&copy; 2025 Himali M Suresh. All rights reserved.</p>
     </div>
@@ -1287,23 +1322,20 @@
 
   // scroll animation
   const observerOptions = {
-    threshold: 0.15,
+    threshold: 0.1,
     rootMargin: '0px 0px -50px 0px'
   };
   const observer = new IntersectionObserver((entries) => {
     entries.forEach(entry => {
       if (entry.isIntersecting) {
         entry.target.classList.add('visible');
-        entry.target.classList.remove('invisible');
       } else {
         entry.target.classList.remove('visible');
-        entry.target.classList.add('invisible');
       }
     });
   }, observerOptions);
   document.querySelectorAll('.fade-in').forEach(el => {
     observer.observe(el);
-    el.classList.add('invisible'); // Start as invisible for fade-out
   });
 
   // smooth scrolling
@@ -2063,603 +2095,173 @@ int main() {
     demonstrate_system();
     return 0;
 }`,
-        compilerLink: 'https://www.programiz.com/cpp-programming/online-compiler/'
+        compilerLink: 'https://www.programiz.com/online-compiler/4XKlqN6z6Qt6v'
       },
       "java": {
         title: 'Financial Portfolio App - Java',
         description: 'A comprehensive Java application demonstrating object-oriented programming, multithreading, and file handling.',
         problem: 'Develop a financial portfolio management system that handles different investment types, calculates returns and risks, and processes data using advanced Java features.',
-        code: `#include &lt;iostream&gt;
-#include &lt;string&gt;
-#include &lt;vector&gt;
-#include &lt;unordered_map&gt;
-#include &lt;queue&gt;
-#include &lt;memory&gt;
-#include &lt;thread&gt;
-#include &lt;mutex&gt;
-#include &lt;algorithm&gt;
-#include &lt;chrono&gt;
-#include &lt;random&gt;
-using namespace std;
-// defining enums for different types and statuses in the system
-enum class bookstatus {
-    available,
-    borrowed,
-    reserved,
-    maintenance
-};
-enum class membertype {
-    student,
-    faculty,
-    staff,
-    guest
-};
-enum class transactiontype {
-    borrow,
-    return_book,
-    reserve,
-    fine_payment
-};
-//  creating a template class for different media items
-template&lt;typename t&gt;
-class mediaitem {
-protected:
-    string id;
-    string title;
-    string author;
-    bookstatus status;
-    chrono::system_clock::time_point due_date;  
-public:
-    //  using constructor initialization lists for efficiency
-    mediaitem(const string& id, const string& title, const string& author) 
-        : id(id), title(title), author(author), status(bookstatus::available) {}
-    
-    virtual ~mediaitem() = default;
-    //  overloading operators for easy comparison
-    bool operator&lt;(const mediaitem& other) const {
-        return title &lt; other.title;
-    }
-    bool operator==(const mediaitem& other) const {
-        return id == other.id;
-    }
-    //  using reference parameters to avoid copying
-    void set_status(const bookstatus& new_status) {
-        status = new_status;
-    }
-    bookstatus get_status() const { return status; }
-    string get_id() const { return id; }
-    string get_title() const { return title; }
-    string get_author() const { return author; }
-    virtual string get_type() const = 0;
-};
-//  creating specific media types using inheritance
-class book : public mediaitem&lt;string&gt; {
-private:
-    string isbn;
-    string category;
-    int pages;  
-public:
-    book(const string& id, const string& title, const string& author, 
-         const string& isbn, const string& category, int pages)
-        : mediaitem(id, title, author), isbn(isbn), category(category), pages(pages) {}
-    
-    string get_type() const override { return "book"; }
-    string get_isbn() const { return isbn; }
-    string get_category() const { return category; }
-    int get_pages() const { return pages; }
-};
+        code: `import java.io.*;
+import java.util.*;
+import java.util.concurrent.*;
+import java.util.function.*;
+import java.util.regex.*;
+import java.util.stream.*;
 
-class journal : public mediaitem&lt;string&gt; {
-private:
-    string issn;
-    int volume;
-    int issue;
-public:
-    journal(const string& id, const string& title, const string& author,
-            const string& issn, int volume, int issue)
-        : mediaitem(id, title, author), issn(issn), volume(volume), issue(issue) {}
-    string get_type() const override { return "journal"; }
-    string get_issn() const { return issn; }
-};
-class dvd : public mediaitem&lt;string&gt; {
-private:
-    string director;
-    int duration_minutes;
-    string genre;  
-public:
-    dvd(const string& id, const string& title, const string& director,
-        int duration, const string& genre)
-        : mediaitem(id, title, director), director(director), 
-          duration_minutes(duration), genre(genre) {}
-    string get_type() const override { return "dvd"; }
-    string get_director() const { return director; }
-    int get_duration() const { return duration_minutes; }
-};
-//  implementing a member class with overloaded operators
-class member {
-private:
-    string member_id;
-    string name;
-    string email;
-    membertype type;
-    vector&lt;string&gt; borrowed_items;
-    double fine_amount;  
-public:
-    member(const string& id, const string& name, const string& email, membertype type)
-        : member_id(id), name(name), email(email), type(type), fine_amount(0.0) {}
-    
-    //  overloading comparison operators for member comparison
-    bool operator&lt;(const member& other) const {
-        return member_id &lt; other.member_id;
+//  creating an abstract base class for different investment types
+abstract class Investment {
+    protected String name;
+    protected double amount;
+    //  initializing the investment
+    public Investment(String name, double amount) {
+        this.name = name;
+        this.amount = amount;
     }
-    
-    bool operator==(const member& other) const {
-        return member_id == other.member_id;
+    //  forcing subclasses to implement this method
+    public abstract double calculateReturn();
+    //  adding a method to get risk
+    public abstract double calculateRisk();
+}
+//  creating an interface for trading strategies
+interface TradingStrategy {
+    void execute(List&lt;Investment&gt; portfolio);
+}
+//  creating another interface for risk calculation
+interface RiskCalculator {
+    double compute(Investment investment);
+}
+//  creating a class for stocks that extends investment
+class Stock extends Investment {
+    private double currentPrice;
+    private double volatility;
+    public Stock(String name, double amount, double currentPrice, double volatility) {
+        super(name, amount);
+        this.currentPrice = currentPrice;
+        this.volatility = volatility;
     }
-    void add_borrowed_item(const string& item_id) {
-        borrowed_items.push_back(item_id);
+    @Override
+    public double calculateReturn() {
+        return (currentPrice * amount) - amount;
     }
-    void remove_borrowed_item(const string& item_id) {
-        borrowed_items.erase(
-            remove(borrowed_items.begin(), borrowed_items.end(), item_id),
-            borrowed_items.end()
-        );
+    @Override
+    public double calculateRisk() {
+        return volatility * amount;
     }
-    void add_fine(double amount) { fine_amount += amount; }
-    void pay_fine(double amount) { fine_amount = max(0.0, fine_amount - amount); }
-    string get_id() const { return member_id; }
-    string get_name() const { return name; }
-    membertype get_type() const { return type; }
-    double get_fine() const { return fine_amount; }
-    const vector&lt;string&gt;& get_borrowed_items() const { return borrowed_items; }
-};
-//  implementing a bst node for book storage
-template&lt;typename t&gt;
-class bstnode {
-public:
-    shared_ptr&lt;t&gt; data;
-    shared_ptr&lt;bstnode&lt;t&gt;&gt; left;
-    shared_ptr&lt;bstnode&lt;t&gt;&gt; right;
-    int height;  
-    bstnode(shared_ptr&lt;t&gt; item) : data(item), left(nullptr), right(nullptr), height(1) {}
-};
-//  creating a balanced bst (avl tree) for efficient book storage
-template&lt;typename t&gt;
-class balancedbst {
-private:
-    shared_ptr&lt;bstnode&lt;t&gt;&gt; root;  
-    //  implementing recursive height calculation
-    int get_height(shared_ptr&lt;bstnode&lt;t&gt;&gt; node) {
-        return node ? node-&gt;height : 0;
+}
+//  defining a basic risk calculator using a lambda-friendly structure
+class BasicRiskCalculator implements RiskCalculator {
+    @Override
+    public double compute(Investment investment) {
+        return investment.calculateRisk();
     }
-    //  calculating balance factor for avl operations
-    int get_balance(shared_ptr&lt;bstnode&lt;t&gt;&gt; node) {
-        return node ? get_height(node-&gt;left) - get_height(node-&gt;right) : 0;
-    }
-    //  implementing right rotation for tree balancing
-    shared_ptr&lt;bstnode&lt;t&gt;&gt; rotate_right(shared_ptr&lt;bstnode&lt;t&gt;&gt; y) {
-        auto x = y-&gt;left;
-        auto temp = x-&gt;right;   
-        x-&gt;right = y;
-        y-&gt;left = temp;
-        //  updating heights after rotation
-        y-&gt;height = max(get_height(y-&gt;left), get_height(y-&gt;right)) + 1;
-        x-&gt;height = max(get_height(x-&gt;left), get_height(x-&gt;right)) + 1;
-        return x;
-    }
-    //  implementing left rotation for tree balancing
-    shared_ptr&lt;bstnode&lt;t&gt;&gt; rotate_left(shared_ptr&lt;bstnode&lt;t&gt;&gt; x) {
-        auto y = x-&gt;right;
-        auto temp = y-&gt;left;   
-        y-&gt;left = x;
-        x-&gt;right = temp;
-        //  updating heights after rotation
-        x-&gt;height = max(get_height(x-&gt;left), get_height(x-&gt;right)) + 1;
-        y-&gt;height = max(get_height(y-&gt;left), get_height(y-&gt;right)) + 1;
-        return y;
-    }
-    //  implementing recursive insertion with balancing
-    shared_ptr&lt;bstnode&lt;t&gt;&gt; insert_recursive(shared_ptr&lt;bstnode&lt;t&gt;&gt; node, shared_ptr&lt;t&gt; item) {
-        //  handling base case for insertion
-        if (!node) {
-            return make_shared&lt;bstnode&lt;t&gt;&gt;(item);
-        }   
-        //  performing standard bst insertion
-        if (*item &lt; *(node-&gt;data)) {
-            node-&gt;left = insert_recursive(node-&gt;left, item);
-        } else if (*(node-&gt;data) &lt; *item) {
-            node-&gt;right = insert_recursive(node-&gt;right, item);
-        } else {
-            return node; //  not allowing duplicates
-        }
-        node-&gt;height = 1 + max(get_height(node-&gt;left), get_height(node-&gt;right));
-        int balance = get_balance(node);
-        if (balance &gt; 1 && *item &lt; *(node-&gt;left-&gt;data)) {
-            return rotate_right(node);
-        }
-        if (balance &lt; -1 && *(node-&gt;right-&gt;data) &lt; *item) {
-            return rotate_left(node);
-        }
-        if (balance &gt; 1 && *(node-&gt;left-&gt;data) &lt; *item) {
-            node-&gt;left = rotate_left(node-&gt;left);
-            return rotate_right(node);
-        }
-        if (balance &lt; -1 && *item &lt; *(node-&gt;right-&gt;data)) {
-            node-&gt;right = rotate_right(node-&gt;right);
-            return rotate_left(node);
-        }
-        return node;
-    }
-    //  implementing recursive in-order traversal
-    void inorder_recursive(shared_ptr&lt;bstnode&lt;t&gt;&gt; node, vector&lt;shared_ptr&lt;t&gt;&gt;& result) {
-        if (node) {
-            inorder_recursive(node-&gt;left, result);
-            result.push_back(node-&gt;data);
-            inorder_recursive(node-&gt;right, result);
-        }
-    }
-    //  implementing recursive search
-    shared_ptr&lt;t&gt; search_recursive(shared_ptr&lt;bstnode&lt;t&gt;&gt; node, const string& key) {
-        if (!node) return nullptr;
-        
-        if (node-&gt;data-&gt;get_title() == key || node-&gt;data-&gt;get_id() == key) {
-            return node-&gt;data;
-        }   
-        auto left_result = search_recursive(node-&gt;left, key);
-        if (left_result) return left_result;
-        return search_recursive(node-&gt;right, key);
-    }
-public:
-    balancedbst() : root(nullptr) {}
-    void insert(shared_ptr&lt;t&gt; item) {
-        root = insert_recursive(root, item);
-    }
-    shared_ptr&lt;t&gt; search(const string& key) {
-        return search_recursive(root, key);
-    }
-    vector&lt;shared_ptr&lt;t&gt;&gt; get_all_items() {
-        vector&lt;shared_ptr&lt;t&gt;&gt; result;
-        inorder_recursive(root, result);
-        return result;
-    }
-};
-//  implementing a reservation system using priority queue
-struct reservation {
-    string member_id;
-    string item_id;
-    chrono::system_clock::time_point request_time;
-    membertype priority_type;  
-    reservation(const string& mid, const string& iid, membertype type)
-        : member_id(mid), item_id(iid), request_time(chrono::system_clock::now()), priority_type(type) {}
-    //  defining priority order (faculty &gt; staff &gt; student &gt; guest)
-    bool operator&lt;(const reservation& other) const {
-        if (priority_type != other.priority_type) {
-            return static_cast&lt;int&gt;(priority_type) &gt; static_cast&lt;int&gt;(other.priority_type);
-        }
-        return request_time &gt; other.request_time; // earlier requests have higher priority
-    }
-};
-//  creating the main library management system class
-class librarysystem {
-private:
-    balancedbst&lt;book&gt; book_collection;
-    balancedbst&lt;journal&gt; journal_collection;
-    balancedbst&lt;dvd&gt; dvd_collection;
-    unordered_map&lt;string, shared_ptr&lt;member&gt;&gt; members;
-    priority_queue&lt;reservation&gt; reservation_queue;
-    unordered_map&lt;string, vector&lt;string&gt;&gt; borrowing_history; // member_id -&gt; item_ids
-    mutable mutex system_mutex;  
-    //  implementing a recommendation engine using collaborative filtering
-    vector&lt;string&gt; generate_recommendations_recursive(const string& member_id, 
-                                                    const vector&lt;string&gt;& all_items,
-                                                    int depth = 0) {
-        if (depth &gt; 3) return {}; //  limiting recursion depth
-        vector&lt;string&gt; recommendations;
-        auto member_it = members.find(member_id);
-        if (member_it == members.end()) return recommendations;
-        const auto& member_history = borrowing_history[member_id];
-        vector&lt;pair&lt;string, int&gt;&gt; similar_members;
-        for (const auto& other_pair : borrowing_history) {
-            if (other_pair.first == member_id) continue;
-            //  calculating similarity score
-            int common_items = 0;
-            for (const string& item : member_history) {
-                if (find(other_pair.second.begin(), other_pair.second.end(), item) 
-                    != other_pair.second.end()) {
-                    common_items++;
-                }
-            }
-            if (common_items &gt; 0) {
-                similar_members.push_back({other_pair.first, common_items});
-            }
-        }
-        //  sorting by similarity score
-        sort(similar_members.begin(), similar_members.end(),
-             [](const pair&lt;string, int&gt;& a, const pair&lt;string, int&gt;& b) {
-                 return a.second &gt; b.second;
-             });
-        //  getting recommendations from similar members
-        for (const auto& similar : similar_members) {
-            if (recommendations.size() &gt;= 5) break;
-            const auto& similar_history = borrowing_history[similar.first];
-            for (const string& item : similar_history) {
-                //  checking if member hasn't borrowed this item
-                if (find(member_history.begin(), member_history.end(), item) 
-                    == member_history.end()) {
-                    if (find(recommendations.begin(), recommendations.end(), item) 
-                        == recommendations.end()) {
-                        recommendations.push_back(item);
-                        if (recommendations.size() &gt;= 5) break;
-                    }
-                }
-            }
-        }
-        return recommendations;
-    }
-    //  implementing multithreaded fine calculation
-    void calculate_fines_threaded() {
-        vector&lt;thread&gt; threads;
-        vector&lt;shared_ptr&lt;member&gt;&gt; member_list;   
-        //  collecting all members
-        for (const auto& pair : members) {
-            member_list.push_back(pair.second);
-        }
-        //  dividing work among threads
-        int num_threads = min(4, static_cast&lt;int&gt;(member_list.size()));
-        int chunk_size = member_list.size() / num_threads;
-        for (int i = 0; i &lt; num_threads; ++i) {
-            int start = i * chunk_size;
-            int end = (i == num_threads - 1) ? member_list.size() : (i + 1) * chunk_size;
-            threads.emplace_back([this, &member_list, start, end]() {
-                for (int j = start; j &lt; end; ++j) {
-                    this-&gt;calculate_member_fine(member_list[j]);
-                }
+}
+//  creating a class to handle portfolio processing with multithreading
+class PortfolioProcessor {
+    private ExecutorService executor = Executors.newFixedThreadPool(4);
+
+    public void processPortfolio(List&lt;Investment&gt; investments, RiskCalculator calculator) {
+        for (Investment investment : investments) {
+            executor.submit(() -&gt; {
+                double risk = calculator.compute(investment);
+                System.out.println("risk for " + investment.name + ": " + risk);
             });
         }
-        //  waiting for all threads to complete
-        for (auto& t : threads) {
-            t.join();
-        }
     }
-    void calculate_member_fine(shared_ptr&lt;member&gt; mem) {
-        lock_guard&lt;mutex&gt; lock(system_mutex);
-        auto now = chrono::system_clock::now();
-        double total_fine = 0.0;
-        //  calculating fines for overdue items
-        for (const string& item_id : mem-&gt;get_borrowed_items()) {
-            //  searching for the item across all collections
-            auto book_item = book_collection.search(item_id);
-            if (book_item) {
-                //  calculating days overdue (simplified logic)
-                auto days_overdue = chrono::duration_cast&lt;chrono::hours&gt;(
-                    now - chrono::system_clock::now()).count() / 24;
-                if (days_overdue &gt; 14) { // assuming 14 day loan period
-                    total_fine += (days_overdue - 14) * 0.50; // $0.50 per day
+    public void shutdown() {
+        executor.shutdown();
+    }
+}
+//  making a utility class for file operations and regex parsing
+class DataLoader {
+    public static List&lt;Investment&gt; loadInvestments(String fileName) throws IOException {
+        List&lt;Investment&gt; investments = new ArrayList&lt;&gt;();
+        Pattern pattern = Pattern.compile("^(\\w+),(\\d+\\.?\\d*),(\\d+\\.?\\d*),(\\d+\\.?\\d*)$");
+
+        try (BufferedReader br = new BufferedReader(new FileReader(fileName))) {
+            String line;
+            while ((line = br.readLine()) != null) {
+                Matcher matcher = pattern.matcher(line);
+                if (matcher.matches()) {
+                    String name = matcher.group(1);
+                    double amount = Double.parseDouble(matcher.group(2));
+                    double price = Double.parseDouble(matcher.group(3));
+                    double vol = Double.parseDouble(matcher.group(4));
+
+                    investments.add(new Stock(name, amount, price, vol));
                 }
             }
         }
-        if (total_fine &gt; 0) {
-            mem-&gt;add_fine(total_fine);
-        }
+        return investments;
     }
-public:
-    librarysystem() = default;
-    //  implementing function overloading for different search methods
-    shared_ptr&lt;book&gt; search_book(const string& title) {
-        return book_collection.search(title);
-    }
-    shared_ptr&lt;book&gt; search_book_by_isbn(const string& isbn) {
-        auto all_books = book_collection.get_all_items();
-        for (const auto& book : all_books) {
-            if (book-&gt;get_isbn() == isbn) {
-                return book;
-            }
-        }
-        return nullptr;
-    }
-    vector&lt;shared_ptr&lt;book&gt;&gt; search_books_by_category(const string& category) {
-        vector&lt;shared_ptr&lt;book&gt;&gt; results;
-        auto all_books = book_collection.get_all_items();
-        for (const auto& book : all_books) {
-            if (book-&gt;get_category() == category) {
-                results.push_back(book);
-            }
-        }
-        return results;
-    }
-    //  adding items to collections
-    void add_book(const string& id, const string& title, const string& author,
-                  const string& isbn, const string& category, int pages) {
-        auto book_ptr = make_shared&lt;book&gt;(id, title, author, isbn, category, pages);
-        book_collection.insert(book_ptr);
-    }
-    void add_journal(const string& id, const string& title, const string& author,
-                     const string& issn, int volume, int issue) {
-        auto journal_ptr = make_shared&lt;journal&gt;(id, title, author, issn, volume, issue);
-        journal_collection.insert(journal_ptr);
-    }
-    void add_dvd(const string& id, const string& title, const string& director,
-                 int duration, const string& genre) {
-        auto dvd_ptr = make_shared&lt;dvd&gt;(id, title, director, duration, genre);
-        dvd_collection.insert(dvd_ptr);
-    }
-    //  managing members
-    void add_member(const string& id, const string& name, const string& email, membertype type) {
-        members[id] = make_shared&lt;member&gt;(id, name, email, type);
-    }
-    shared_ptr&lt;member&gt; get_member(const string& id) {
-        auto it = members.find(id);
-        return (it != members.end()) ? it-&gt;second : nullptr;
-    }
-    //  implementing borrowing system
-    bool borrow_book(const string& member_id, const string& book_id) {
-        lock_guard&lt;mutex&gt; lock(system_mutex);
-        auto member_ptr = get_member(member_id);
-        auto book_ptr = search_book(book_id);
-        if (!member_ptr || !book_ptr) return false;
-        if (book_ptr-&gt;get_status() != bookstatus::available) return false;
-        //  updating book status and member records
-        book_ptr-&gt;set_status(bookstatus::borrowed);
-        member_ptr-&gt;add_borrowed_item(book_id);
-        borrowing_history[member_id].push_back(book_id);
-        return true;
-    }
-    bool return_book(const string& member_id, const string& book_id) {
-        lock_guard&lt;mutex&gt; lock(system_mutex);
-        auto member_ptr = get_member(member_id);
-        auto book_ptr = search_book(book_id);
-        if (!member_ptr || !book_ptr) return false;
-        //  updating records
-        book_ptr-&gt;set_status(bookstatus::available);
-        member_ptr-&gt;remove_borrowed_item(book_id);
-        //  checking for reservations
-        while (!reservation_queue.empty()) {
-            auto reservation = reservation_queue.top();
-            if (reservation.item_id == book_id) {
-                reservation_queue.pop();
-                book_ptr-&gt;set_status(bookstatus::reserved);
-                //  notifying the member (simplified)
-                cout &lt;&lt; "book " &lt;&lt; book_id &lt;&lt; " is now reserved for member " 
-                     &lt;&lt; reservation.member_id &lt;&lt; endl;
-                break;
-            } else {
-                break; //  keeping other reservations
-            }
-        }
-        return true;
-    }
-    //  implementing reservation system
-    void reserve_item(const string& member_id, const string& item_id) {
-        auto member_ptr = get_member(member_id);
-        if (member_ptr) {
-            reservation_queue.emplace(member_id, item_id, member_ptr-&gt;get_type());
-        }
-    }
-    //  getting recommendations for a member
-    vector&lt;string&gt; get_recommendations(const string& member_id) {
-        vector&lt;string&gt; all_books;
-        auto books = book_collection.get_all_items();
-        for (const auto& book : books) {
-            all_books.push_back(book-&gt;get_id());
-        }
-        return generate_recommendations_recursive(member_id, all_books);
-    }
-    //  generating statistical reports
-    void generate_statistics() {
-        cout &lt;&lt; "\n=== library statistics ===" &lt;&lt; endl;
-        auto books = book_collection.get_all_items();
-        auto journals = journal_collection.get_all_items();
-        auto dvds = dvd_collection.get_all_items();
-        cout &lt;&lt; "total books: " &lt;&lt; books.size() &lt;&lt; endl;
-        cout &lt;&lt; "total journals: " &lt;&lt; journals.size() &lt;&lt; endl;
-        cout &lt;&lt; "total dvds: " &lt;&lt; dvds.size() &lt;&lt; endl;
-        cout &lt;&lt; "total members: " &lt;&lt; members.size() &lt;&lt; endl;
-        cout &lt;&lt; "pending reservations: " &lt;&lt; reservation_queue.size() &lt;&lt; endl;
-        //  calculating category statistics
-        unordered_map&lt;string, int&gt; category_count;
-        for (const auto& book : books) {
-            category_count[book-&gt;get_category()]++;
-        }
-        cout &lt;&lt; "\nbooks by category:" &lt;&lt; endl;
-        for (const auto& pair : category_count) {
-            cout &lt;&lt; "  " &lt;&lt; pair.first &lt;&lt; ": " &lt;&lt; pair.second &lt;&lt; endl;
-        }
-        //  calculating borrowing statistics
-        int total_borrowed = 0;
-        for (const auto& member_pair : members) {
-            total_borrowed += member_pair.second-&gt;get_borrowed_items().size();
-        }
-        cout &lt;&lt; "total items borrowed: " &lt;&lt; total_borrowed &lt;&lt; endl;
-    }
-    //  running the fine calculation system
-    void process_fines() {
-        cout &lt;&lt; "calculating fines using multithreading..." &lt;&lt; endl;
-        calculate_fines_threaded();
-        cout &lt;&lt; "fine calculation completed." &lt;&lt; endl;
-    }
-    //  displaying all items in collections
-    void display_collection() {
-        cout &lt;&lt; "\n=== book collection ===" &lt;&lt; endl;
-        auto books = book_collection.get_all_items();
-        for (const auto& book : books) {
-            cout &lt;&lt; "id: " &lt;&lt; book-&gt;get_id() 
-                 &lt;&lt; ", title: " &lt;&lt; book-&gt;get_title()
-                 &lt;&lt; ", author: " &lt;&lt; book-&gt;get_author()
-                 &lt;&lt; ", isbn: " &lt;&lt; book-&gt;get_isbn()
-                 &lt;&lt; ", category: " &lt;&lt; book-&gt;get_category()
-                 &lt;&lt; ", status: " &lt;&lt; static_cast&lt;int&gt;(book-&gt;get_status()) &lt;&lt; endl;
-        }
-    }
-};
-//  creating a demonstration function
-void demonstrate_system() {
-    librarysystem library;
-    cout &lt;&lt; "initializing advanced library management system..." &lt;&lt; endl;
-    library.add_book("b001", "the great gatsby", "f. scott fitzgerald", 
-                     "978-0-7432-7356-5", "fiction", 180);
-    library.add_book("b002", "to kill a mockingbird", "harper lee", 
-                     "978-0-06-112008-4", "fiction", 281);
-    library.add_book("b003", "introduction to algorithms", "cormen", 
-                     "978-0-262-03384-8", "computer science", 1312);
-    library.add_book("b004", "clean code", "robert martin", 
-                     "978-0-13-235088-4", "programming", 464);
-    library.add_journal("j001", "nature", "various", "0028-0836", 595, 7875);
-    library.add_journal("j002", "science", "various", "0036-8075", 375, 6570);
-    library.add_dvd("d001", "the matrix", "wachowski sisters", 136, "sci-fi");
-    library.add_dvd("d002", "inception", "christopher nolan", 148, "thriller");
-    library.add_member("m001", "A", "a@gmail.com", membertype::student);
-    library.add_member("m002", "B", "b@gmail.com", membertype::faculty);
-    library.add_member("m003", "C", "C@gemail.com", membertype::staff);
-    cout &lt;&lt; "\ndemonstrating borrowing system..." &lt;&lt; endl;
-    if (library.borrow_book("m001", "b001")) {
-        cout &lt;&lt; "A successfully borrowed 'the great gatsby'" &lt;&lt; endl;
-    }
-    if (library.borrow_book("m002", "b003")) {
-        cout &lt;&lt; "B successfully borrowed 'introduction to algorithms'" &lt;&lt; endl;
-    }
-    cout &lt;&lt; "\ndemonstrating reservation system..." &lt;&lt; endl;
-    library.reserve_item("m003", "b001"); 
-    cout &lt;&lt; "\ndemonstrating search functionality..." &lt;&lt; endl;
-    auto found_book = library.search_book("clean code");
-    if (found_book) {
-        cout &lt;&lt; "found book: " &lt;&lt; found_book-&gt;get_title() 
-             &lt;&lt; " by " &lt;&lt; found_book-&gt;get_author() &lt;&lt; endl;
-    }
-    auto fiction_books = library.search_books_by_category("fiction");
-    cout &lt;&lt; "fiction books found: " &lt;&lt; fiction_books.size() &lt;&lt; endl;
-    cout &lt;&lt; "\ndemonstrating return system..." &lt;&lt; endl;
-    if (library.return_book("m001", "b001")) {
-        cout &lt;&lt; "Ae returned 'the great gatsby'" &lt;&lt; endl;
-    }
-    cout &lt;&lt; "\ndemonstrating recommendation system..." &lt;&lt; endl;
-    auto recommendations = library.get_recommendations("m001");
-    cout &lt;&lt; "recommendations for A: ";
-    for (const auto& rec : recommendations) {
-        cout &lt;&lt; rec &lt;&lt; " ";
-    }
-    cout &lt;&lt; endl;
-    library.process_fines();
-    library.generate_statistics();
-    library.display_collection();   
-    cout &lt;&lt; "\nadvanced library management system demonstration completed!" &lt;&lt; endl;
 }
-int main() {
-    cout &lt;&lt; "welcome to the advanced library management system" &lt;&lt; endl;
-    cout &lt;&lt; "this system demonstrates:" &lt;&lt; endl;
-    cout &lt;&lt; "- balanced bst for efficient storage" &lt;&lt; endl;
-    cout &lt;&lt; "- hash tables for member lookup" &lt;&lt; endl;
-    cout &lt;&lt; "- priority queues for reservations" &lt;&lt; endl;
-    cout &lt;&lt; "- template classes for different media types" &lt;&lt; endl;
-    cout &lt;&lt; "- function overloading for search methods" &lt;&lt; endl;
-    cout &lt;&lt; "- operator overloading for comparisons" &lt;&lt; endl;
-    cout &lt;&lt; "- recursive algorithms for recommendations" &lt;&lt; endl;
-    cout &lt;&lt; "- multithreading for fine calculations" &lt;&lt; endl;
-    cout &lt;&lt; "- smart pointers for memory management" &lt;&lt; endl;
-    cout &lt;&lt; "- advanced c++ features throughout" &lt;&lt; endl;
-    demonstrate_system();
-    return 0;
-}`,
-        compilerLink: 'https://www.programiz.com/cpp-programming/online-compiler/'
+//  creating a class to demonstrate sorting using stream api and lambda
+class PortfolioAnalyzer {
+    public void printTopPerformers(List&lt;Investment&gt; investments) {
+        investments.stream()
+            .sorted((i1, i2) -&gt; Double.compare(i2.calculateReturn(), i1.calculateReturn()))
+            .limit(5)
+            .forEach(inv -&gt; System.out.println(inv.name + ": return = " + inv.calculateReturn()));
+    }
+}
+//  using annotations to validate investments (just a dummy usage for now)
+@interface Validated {}
+// this is the main class where everything runs
+public class FinancialPortfolioApp {
+    public static void main(String[] args) {
+        try {
+            //  loading the data from file
+            List&lt;Investment&gt; investments = DataLoader.loadInvestments("portfolio.csv");
+            //  filtering high value investments using lambda
+            List&lt;Investment&gt; highValue = investments.stream()
+                .filter(inv -&gt; inv.amount &gt; 10000)
+                .collect(Collectors.toList());
+            //  analyzing top performers
+            PortfolioAnalyzer analyzer = new PortfolioAnalyzer();
+            analyzer.printTopPerformers(highValue);
+            //  calculating risk using threads
+            PortfolioProcessor processor = new PortfolioProcessor();
+            processor.processPortfolio(highValue, new BasicRiskCalculator());
+            processor.shutdown();
+            // predicate: check if an investment is healthy (risk &lt; 1000)
+            Predicate&lt;Investment&gt; isHealthy = inv -&gt; inv.calculateRisk() &lt; 1000;
+            // function: generate a summary string
+            Function&lt;Investment, String&gt; summary = inv -&gt; 
+                inv.name + " → invested: $" + inv.amount + ", return: " 
+                + String.format("%.2f", inv.calculateReturn()) 
+                + ", risk: " + String.format("%.2f", inv.calculateRisk());
+            // consumer: log basic info
+            Consumer&lt;Investment&gt; logger = inv -&gt; 
+                System.out.println("[log] checked: " + inv.name);
+            // print health report
+            System.out.println("\n=== investment health report ===");
+            investments.stream()
+                .peek(logger)
+                .map(summary)
+                .forEach(System.out::println);
+
+            // list risky investments
+            System.out.println("\n=== risky investments (risk ≥ 1000) ===");
+            investments.stream()
+                .filter(isHealthy.negate())
+                .map(inv -&gt; inv.name + " → risk = " + String.format("%.2f", inv.calculateRisk()))
+                .forEach(System.out::println);
+        } catch (IOException e) {
+            System.out.println("error loading portfolio: " + e.getMessage());
+        }
+        System.out.println("Update the CSV file for different results!");
+    }
+}
+`,
+        csv: `AAPL,10000,180.25,0.12
+GOOGL,15000,2750.50,0.08
+TSLA,8000,720.10,0.22
+AMZN,12000,3300.00,0.09
+MSFT,9000,295.60,0.11
+META,11000,365.75,0.13
+NFLX,7000,420.90,0.19
+NVDA,10000,650.30,0.15
+BABA,6000,160.80,0.25
+IBM,5000,140.50,0.10`
       }
     };
     const data = backendData[language];
@@ -2672,29 +2274,24 @@ int main() {
           <div style="display: flex; border-bottom: 1px solid var(--border);">
             <button id="javaTab" class="copy-btn" style="border-radius: 6px 6px 0 0; border-bottom: none; background: var(--primary); color: white;">Java Code</button>
             <button id="csvTab" class="copy-btn" style="border-radius: 6px 6px 0 0; border-bottom: none; background: var(--bg-alt); color: var(--text); margin-left: 2px;">CSV Data</button>
-            <a href="${data.zipLink}" download class="copy-btn" style="margin-left:auto;">Download ZIP</a>
+            <button id="downloadZipBtn" class="copy-btn" style="margin-left:auto;">Download ZIP</button>
           </div>
-          <div id="javaCodeBox" class="code-content">${data.code.replace(/\n/g, '<br>')}</div>
-          <div id="csvCodeBox" class="code-content" style="display:none;">${data.csv.replace(/\n/g, '<br>')}</div>
-          <div style="display: flex; justify-content: flex-end; gap: 1rem; margin: 0.5rem 1.5rem 0 0;">
+          <div id="artifactBox" class="code-content" style="max-height:400px;overflow-y:auto;">${data.code.replace(/\n/g, '<br>')}</div>
+          <div style="display: flex; justify-content: flex-end; margin: 0.5rem 1.5rem 0 0;">
             <button id="copyJavaBtn" class="copy-btn">Copy Code</button>
             <button id="copyCsvBtn" class="copy-btn" style="display:none;">Copy CSV</button>
           </div>
         </div>
-        <div style="text-align: center; margin-top: 2rem;">
-          <a href="${data.sampleLink}" target="_blank" class="project-link secondary">View Sample Output</a>
-        </div>
-        <div style="margin-top: 2rem; padding: 2rem; background: var(--bg-alt); border-radius: 12px;">
-          <h3 style="color: var(--primary); margin-bottom: 1rem;">Demo Section</h3>
-          <p style="color: var(--text-light);">Demo video/screenshot will be uploaded here.</p>
+        <div style="margin-top: 2rem; padding: 2rem; background: var(--bg-alt); border-radius: 12px; text-align:center;">
+          <h3 style="color: var(--primary); margin-bottom: 1rem;">Output</h3>
+          <img src="javaOutput.png" alt="Java Output Screenshot" style="max-width:100%;border-radius:8px;box-shadow:0 2px 8px rgba(0,0,0,0.08);">
         </div>
       `;
-      // Tab logic
       setTimeout(() => {
         const javaTab = document.getElementById('javaTab');
         const csvTab = document.getElementById('csvTab');
-        const javaCodeBox = document.getElementById('javaCodeBox');
-        const csvCodeBox = document.getElementById('csvCodeBox');
+        const artifactBox = document.getElementById('artifactBox');
+        const downloadZipBtn = document.getElementById('downloadZipBtn');
         const copyJavaBtn = document.getElementById('copyJavaBtn');
         const copyCsvBtn = document.getElementById('copyCsvBtn');
         javaTab.onclick = () => {
@@ -2702,8 +2299,7 @@ int main() {
           javaTab.style.color = 'white';
           csvTab.style.background = 'var(--bg-alt)';
           csvTab.style.color = 'var(--text)';
-          javaCodeBox.style.display = '';
-          csvCodeBox.style.display = 'none';
+          artifactBox.innerHTML = data.code.replace(/\n/g, '<br>');
           copyJavaBtn.style.display = '';
           copyCsvBtn.style.display = 'none';
         };
@@ -2712,10 +2308,25 @@ int main() {
           csvTab.style.color = 'white';
           javaTab.style.background = 'var(--bg-alt)';
           javaTab.style.color = 'var(--text)';
-          javaCodeBox.style.display = 'none';
-          csvCodeBox.style.display = '';
+          artifactBox.innerHTML = data.csv.replace(/\n/g, '<br>');
           copyJavaBtn.style.display = 'none';
           copyCsvBtn.style.display = '';
+        };
+        downloadZipBtn.onclick = () => {
+          if (!window.JSZip) {
+            alert('JSZip library not loaded.');
+            return;
+          }
+          const zip = new JSZip();
+          zip.file('FinancialPortfolioApp.java', data.code);
+          zip.file('portfolio.csv', data.csv);
+          zip.generateAsync({type: 'blob'}).then(function(content) {
+            const a = document.createElement('a');
+            a.href = URL.createObjectURL(content);
+            a.download = 'FinancialPortfolioApp.zip';
+            a.click();
+            setTimeout(() => URL.revokeObjectURL(a.href), 1000);
+          });
         };
         copyJavaBtn.onclick = () => {
           navigator.clipboard.writeText(data.code);
@@ -2731,6 +2342,26 @@ int main() {
       modal.style.display = 'block';
       return;
     }
+    if(language === 'cpp') {
+      modalContent.innerHTML = `
+        <h2 class="modal-title">${data.title}</h2>
+        <p style="margin-bottom: 1rem;"><strong>Problem Statement:</strong> ${data.problem}</p>
+        <p style="margin-bottom: 2rem;">${data.description}</p>
+        <div class="code-container">
+          <div class="code-header">
+            <span class="code-filename">main.cpp</span>
+            <button class="copy-btn" onclick="copyCode(this)">Copy Code</button>
+          </div>
+          <div class="code-content" id="backendCodeBox" style="max-height:400px;overflow-y:auto;">${data.code}</div>
+        </div>
+        <div style="margin-top: 2rem; padding: 2rem; background: var(--bg-alt); border-radius: 12px; text-align:center;">
+          <h3 style="color: var(--primary); margin-bottom: 1rem;">Output</h3>
+          <img src="cppOutput.png" alt="C++ Output Screenshot" style="max-width:100%;border-radius:8px;box-shadow:0 2px 8px rgba(0,0,0,0.08);">
+        </div>
+      `;
+      modal.style.display = 'block';
+      return;
+    }
     modalContent.innerHTML = `
       <h2 class="modal-title">${data.title}</h2>
       <p style="margin-bottom: 1rem;"><strong>Problem Statement:</strong> ${data.problem}</p>
@@ -2740,7 +2371,7 @@ int main() {
           <span class="code-filename">main.${language === 'cpp' ? 'cpp' : 'java'}</span>
           <button class="copy-btn" onclick="copyCode(this)">Copy Code</button>
         </div>
-        <div class="code-content" id="backendCodeBox">${data.code}</div>
+        <div class="code-content" id="backendCodeBox" style="max-height:400px;overflow-y:auto;">${data.code}</div>
       </div>
       <div style="text-align: center; margin-top: 2rem;">
         <a href="${data.compilerLink}" target="_blank" class="compiler-link">
@@ -2794,6 +2425,98 @@ int main() {
     const scrollPercent = docHeight > 0 ? (scrollTop / docHeight) * 100 : 0;
     scrollBar.style.width = scrollPercent + '%';
   });
+
+  // Floating dots wallpaper for hero
+  (function() {
+    const canvas = document.getElementById('heroWallpaper');
+    if (!canvas) return;
+    const ctx = canvas.getContext('2d');
+    let width, height, dpr;
+    const DOTS = 70;
+    const dots = [];
+    function getDotColors() {
+      // Get the computed hero gradient colors
+      const style = getComputedStyle(document.body);
+      const c1 = style.getPropertyValue('--primary').trim() || '#645c7b';
+      const c2 = style.getPropertyValue('--secondary').trim() || '#f0abfc';
+      return [c1, c2];
+    }
+    function resize() {
+      dpr = window.devicePixelRatio || 1;
+      width = canvas.offsetWidth;
+      height = canvas.offsetHeight;
+      canvas.width = width * dpr;
+      canvas.height = height * dpr;
+      ctx.setTransform(1,0,0,1,0,0);
+      ctx.scale(dpr, dpr);
+    }
+    function random(min, max) {
+      return Math.random() * (max - min) + min;
+    }
+    function initDots() {
+      const [c1, c2] = getDotColors();
+      dots.length = 0;
+      for (let i = 0; i < DOTS; i++) {
+        dots.push({
+          x: random(0, width),
+          y: random(0, height),
+          r: random(2, 2.5), // 4-5px diameter
+          vx: random(-0.18, 0.18),
+          vy: random(-0.18, 0.18),
+          color: Math.random() < 0.5 ? c1 : c2
+        });
+      }
+    }
+    function updateDotColors() {
+      const [c1, c2] = getDotColors();
+      for (const dot of dots) {
+        dot.color = Math.random() < 0.5 ? c1 : c2;
+      }
+    }
+    function draw() {
+      ctx.clearRect(0, 0, width, height);
+      for (const dot of dots) {
+        ctx.beginPath();
+        ctx.arc(dot.x, dot.y, dot.r, 0, 2 * Math.PI);
+        ctx.fillStyle = dot.color;
+        ctx.fill();
+      }
+    }
+    function update() {
+      for (const dot of dots) {
+        dot.x += dot.vx;
+        dot.y += dot.vy;
+        if (dot.x < 0) dot.x = width;
+        if (dot.x > width) dot.x = 0;
+        if (dot.y < 0) dot.y = height;
+        if (dot.y > height) dot.y = 0;
+      }
+    }
+    function animate() {
+      update();
+      draw();
+      requestAnimationFrame(animate);
+    }
+    function setup() {
+      resize();
+      initDots();
+    }
+    window.addEventListener('resize', () => {
+      resize();
+      initDots();
+    });
+    // If theme changes, update dot colors
+    const observer = new MutationObserver(() => {
+      updateDotColors();
+      draw();
+    });
+    observer.observe(document.body, { attributes: true, attributeFilter: ['data-theme'] });
+    setTimeout(() => {
+      setup();
+      animate();
+    }, 200);
+  })();
 </script>
++<script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
 </body>
 </html>
